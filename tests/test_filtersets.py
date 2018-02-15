@@ -98,6 +98,24 @@ class BaseTests(TestCase):
             mock.call(babar=123)
         ])
 
+    def test_method_filtering(self):
+        class TestFS(Filterset):
+            foo = filters.CharFilter(method='filter_foo')
+
+            def filter_foo(self, queryset, field_name, field_value):
+                return queryset.filter(**{field_name: field_value})
+
+        qs = mock.Mock()
+        qs.filter = mock.Mock(return_value=qs)
+        fs = TestFS({ 'foo': "Foo", 'bar': 123 })
+
+        fs.filter_queryset(qs)
+
+        qs.filter.assert_has_calls([
+            mock.call(foo="Foo"),
+        ])
+        
+
 class ModelTests(TestCase):
     def test_auto_types(self):
 

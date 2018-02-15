@@ -1,7 +1,7 @@
 from mongoengine.queryset import transform, Q
 from rest_framework import fields
 
-from .fields import  DateTime000Field, ListField, RangeField, GeoPointField,  ObjectIdField
+from .fields import  DateTimeField, ListField, RangeField, GeoPointField,  ObjectIdField
 
 COMPARISION_OPERATORS = ('ne', 'gt', 'gte', 'lt', 'lte')
 
@@ -25,7 +25,7 @@ class Filter():
     partial = True
 
     _creation_counter = 0
-    def __init__(self, lookup=None, name=None, **kwargs):
+    def __init__(self, lookup=None, name=None, method=None, **kwargs):
         """
         Args:
         - lookup: override lookup operator
@@ -39,6 +39,7 @@ class Filter():
         if self.lookup_type not in self.VALID_LOOKUPS:
             raise TypeError("invalid lookup type: " + repr(self.lookup_type))
 
+        self.method = method
         self.parent = None
         self.field = self.make_field(**kwargs)
 
@@ -113,7 +114,7 @@ class FloatFilter(Filter):
     field_class = fields.FloatField
 
 class DateTimeFilter(Filter):
-    field_class = DateTime000Field
+    field_class = DateTimeField
 
 
 class ObjectIdFilter(Filter):

@@ -69,9 +69,11 @@ class BaseFilterset(metaclass=FiltersetMeta):
             params = filt.filter_params(val)
             if not params:
                 continue
-            if isinstance(params, dict):
+            elif filt.method: # if method is set use that
+                queryset = getattr(self, filt.method)(queryset, name, params[name]) 
+            elif isinstance(params, dict):
                 queryset = queryset.filter(**params)
-            if isinstance(params, QNode):
+            elif isinstance(params, QNode):
                 queryset = queryset.filter(params)
         return queryset
 
