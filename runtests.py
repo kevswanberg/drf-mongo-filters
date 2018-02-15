@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+import django
 from django.conf import settings
 from django.core.management import execute_from_command_line
 from tests import mongoutils
@@ -17,6 +18,8 @@ settings.configure(
         },
     },
     INSTALLED_APPS=(
+        'django.contrib.contenttypes',
+        'django.contrib.auth',
         'tests',
     ),
     MIDDLEWARE_CLASSES=(),
@@ -24,6 +27,7 @@ settings.configure(
     SECRET_KEY='foobar',
     TEST_RUNNER='tests.mongoutils.TestRunner'
 )
+
 
 def runtests():
     mongoutils.mongo_connect()
