@@ -22,7 +22,7 @@ class TestRunner(DiscoverRunner):
     def _iter_test_databases(cls):
         for alias, params in settings.MONGO_DATABASES.items():
             test_params = dict(params)
-            test_params['name'] = 'test_' + params['name']
+            test_params['name'] = params['name']
             yield (alias, test_params)
 
     def setup_databases(self, *args, **kwargs):

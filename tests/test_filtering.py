@@ -175,7 +175,7 @@ class BasicTests(QuerysetTesting, TestCase):
         class FS(Filterset):
             foo = filters.CharFilter(source='f_oid')
 
-        fs = FS({'foo': oid})
+        fs = FS({'foo': str(oid)})
         qs = fs.filter_queryset(SimpleDoc.objects.all())
         self.assertQuerysetDocs(qs, objects[1:2])
 
@@ -190,7 +190,9 @@ class BasicTests(QuerysetTesting, TestCase):
         class FS(Filterset):
             foo = filters.CharFilter(source='f_ref')
 
-        fs = FS({'foo': oid})
+        fs = FS({'foo': str(oid)})
+        # Objectids will always be a str when coming from  a query
+        
         qs = fs.filter_queryset(SimpleDoc.objects.all())
         self.assertQuerysetDocs(qs, objects[1:2])
 

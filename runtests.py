@@ -13,7 +13,7 @@ settings.configure(
     },
     MONGO_DATABASES={
         'default': {
-            'name': 'dumb',
+            'name': 'test',
         },
     },
     INSTALLED_APPS=(
