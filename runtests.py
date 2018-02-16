@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import sys
-import django
 from django.conf import settings
 from django.core.management import execute_from_command_line
 from tests import mongoutils
